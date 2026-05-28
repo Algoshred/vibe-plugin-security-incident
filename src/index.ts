@@ -20,7 +20,7 @@ import type {
 import { CveSecretBlastRadiusProvider } from "./provider.js";
 
 const PLUGIN_NAME = "security-incident";
-const PLUGIN_VERSION = "2026.528.1";
+const PLUGIN_VERSION = "2026.528.2";
 
 export const createPlugin: VibePluginFactory = (_ctx: ProfileContext): VibePlugin => {
   const provider = new CveSecretBlastRadiusProvider();
