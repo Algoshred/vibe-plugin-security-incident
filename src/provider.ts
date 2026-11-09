@@ -71,8 +71,13 @@ export class CveSecretBlastRadiusProvider implements SecurityProvider {
         error: (m: string) => this.host?.logger?.error?.(LOG_NAMESPACE, m),
       },
     };
-    this.gitleaksPath = await resolveToolPath(ctx, "gitleaks", TOOLS_MANIFEST.gitleaks);
-    this.grypePath = await resolveToolPath(ctx, "grype", TOOLS_MANIFEST.grype);
+    const gitleaksEntry = TOOLS_MANIFEST.gitleaks;
+    const grypeEntry = TOOLS_MANIFEST.grype;
+    if (!gitleaksEntry || !grypeEntry) {
+      throw new Error("Tools manifest is missing the gitleaks or grype entry");
+    }
+    this.gitleaksPath = await resolveToolPath(ctx, "gitleaks", gitleaksEntry);
+    this.grypePath = await resolveToolPath(ctx, "grype", grypeEntry);
   }
 
   async run(input: SecurityScanInput): Promise<SecurityScanResult> {
